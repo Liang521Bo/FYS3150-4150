@@ -1,2 +1,11 @@
 # FYS3150-4150
 This folder contains the results of project 1, 2 and 3 for course FYS3150/4150, which is collaboration work from Liang and Emil.
+
+## Folder structure
+
+* The projects are split into two parts a *project nr. x* folder and a *test project nr. x*.
+* The first folder contains all of the raw code from the project.
+  * There is also a folder called *Results* which contains our plots and resolts from the runs with the data.
+  * Within the first folder of the projects you will also find the PDF with the report.
+
+*The first folder also contains the run with our data.*
