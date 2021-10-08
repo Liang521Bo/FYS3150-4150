@@ -12,3 +12,5 @@ This folder contains the results of project 1, 2 and 3 for course FYS3150/4150, 
 
 ## To run the test function with unittest the run code is for example:
 > python -m unittest test_Analsysfunctions
+
+*Without adding .py*
