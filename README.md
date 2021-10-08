@@ -9,3 +9,6 @@ This folder contains the results of project 1, 2 and 3 for course FYS3150/4150, 
   * Within the first folder of the projects you will also find the PDF with the report.
 
 *The first folder also contains the run with our data.*
+
+## To run the test function with unittest the run code is for example:
+> python -m unittest test_Analsysfunctions
