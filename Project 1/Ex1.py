@@ -60,7 +60,7 @@ for d in range(1, 6):
 
     plt.title('Influence of noise on MSE and R2 score with polynomial degree {}'.format(d))
     fig2.tight_layout()
-    plt.savefig('./Results/Degree {}.pdf'.format(d))
+    plt.savefig('./Results/Degree {}.png'.format(d))
 
 text_file.close()
 
