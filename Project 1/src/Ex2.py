@@ -15,7 +15,7 @@ y = X[:, 1]
 z = FrankeFunction(x, y)
 
 MSE, R2_b, bias, variance = bootstrap(x, y, z, method='OLS', p_degree=5)
-text_file = open("./Results/Bootstrap_ols.txt", "w")
+text_file = open("../Results/ex2/Bootstrap_ols.txt", "w")
 text_file.write('--- BOOTSTRAP for OLS --- \n')
 text_file.write('MSE: {} \n'.format(MSE))
 text_file.write('R2: {} \n'.format(R2_b))

@@ -1,10 +1,9 @@
 """
-Functions to use in analysis of a regression method
+Functions to use in analysis of regression methods
 """
 import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
 def FrankeFunction(x,y, noise = 0):
@@ -24,53 +23,59 @@ def R2(zReal, zPredicted):
     R2 = 1 - (np.sum((zReal - zPredicted)**2)/np.sum((zReal - np.mean(zReal))**2))
     return R2
 
-def MeanSquaredError(z, z_hat):
+def MeanSquaredError(zReal, zPredicted):
     """
-    :param z: actual z-values, size (n, 1)
-    :param z_hat: predicted z-values, size (n, 1)
+    :param zReal: actual z-values, size (n, 1)
+    :param zPredicted: predicted z-values, size (n, 1)
     :return: Mean squared error
     """
-    MSE = np.sum((z - z_hat)**2)/len(z)
+    MSE = np.sum((zReal - zPredicted)**2)/len(z)
     return MSE
 
-def betaCI_OLS(z_real, beta, X):
+def betaCI_OLS(zReal, beta_mean, X):
     """
+    :param zReal: actual z-values, size (n, 1)
+    :param beta_mean: mean of beta
+    :param X: dataset
     Compute a 90% confidence interval for the beta coefficients
     """
 
     # Calculate variance squared in the error
     z_hat = X.dot(beta)
     N, P = np.shape(X)
-    sigma2 = (np.sum(np.power((z_real-z_hat), 2)))/N
+    sigma2 = (np.sum(np.power((zReal-z_hat), 2)))/N
 
     # Calculate the variance squared of the beta coefficients
     var_beta = np.diag(sigma2*np.linalg.inv((X.T.dot(X))))
 
-    # The square root of var_beta is the standard error. Use it to calculate confidence intervals
-    ci_minus = beta - 1.645*np.sqrt(var_beta/N)
-    ci_plus = beta + 1.645*np.sqrt(var_beta/N)
+    # The square root of var_beta is the standard error. Confidence intervals are calculated as mean +/- Z*SE
+    ci_minus = beta_mean - 1.645*var_beta
+    ci_plus = beta_mean + 1.645*var_beta
 
     return ci_minus, ci_plus
 
 
-def betaCI_Ridge(z_real, beta, X, l):
+def betaCI_Ridge(zReal, beta_mean, X, l):
     """
+    :param zReal: actual z-values, size (n, 1)
+    :param beta_mean: mean of beta
+    :param X: dataset
     Compute a 90% confidence interval for the beta coefficients - Ridge
     """
 
     # Calculate variance squared in the error
     z_hat = X.dot(beta)
     N, P = np.shape(X)
-    sigma_2 = (np.sum(np.power((z_real-z_hat), 2)))/N
+    sigma_2 = (np.sum(np.power((zReal-z_hat), 2)))/N
 
     # Calculate the variance squared of the beta coefficients
     XTX= X.T.dot(X)
     R, R = np.shape(XTX)
     var_beta = np.diag(sigma_2*np.linalg.inv((XTX + l*np.identity(R))))
 
-    # The square root of var_beta is the standard error. Use it to calculate confidence intervals
-    ci_minus = beta - 1.645*np.sqrt(var_beta/N)
-    ci_plus = beta + 1.645*np.sqrt(var_beta/N)
+    # The square root of var_beta is the standard error. Confidence intervals are calculated as mean +/- Z*SE
+    ci_minus = beta_mean - 1.645*var_beta
+    ci_plus = beta_mean + 1.645*var_beta
 
     return ci_minus, ci_plus
 
@@ -190,7 +195,6 @@ def bootstrap(x, y, z, p_degree, method, n_bootstrap=100):
         # Calculate MSE
         MSE.append(np.mean((z_test - z_hat)**2))
         R2s.append(R2(z_test, z_hat))
-        #print('Round: ', i)
 
     # Calculate MSE, Bias and Variance
     MSE_M = np.mean(MSE)

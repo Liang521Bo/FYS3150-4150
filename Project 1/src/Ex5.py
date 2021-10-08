@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 from sklearn.model_selection import train_test_split
+from sklearn import linear_model
+from sklearn.utils import resample
 
 """
     Analysis of a Lasso Regression model of Franke's function
@@ -33,7 +35,7 @@ poly = PolynomialFeatures(5)
 M = poly.fit_transform(M_)
 MSEs = []
 R2s = []
-text_file = open("./Results/Bootstrap_lasso.txt", "w")
+text_file = open("../Results/ex5/Bootstrap_lasso.txt", "w")
 for i in range(len(alphas)):
     z_predict = M.dot(Bs[i])
     MSE = MeanSquaredError(z_test, z_predict)
@@ -57,11 +59,11 @@ ax2.tick_params('y', colors='r')
 
 plt.title('Influence of alpha on MSE and R2 Score')
 fig.tight_layout()
-plt.savefig('./Results/MSE_R2_alpha.pdf')
+plt.savefig('../Results/ex5/MSE_R2_alpha.png')
 
 # Investigate how the alpha values are influenced by noise
 noise = np.arange(0, 0.4, 0.01)
-alphas = [10**-7, 10**-5, 10**-3,10**-2, 10**-1]
+alphas = [10**-7, 10**-3, 1]
 Bs = []
 
 # Generate more data to test
@@ -97,7 +99,7 @@ plt.legend()
 plt.xlabel('Degree of noise')
 plt.ylabel('MSE')
 plt.title('Influence of alpha and noise on MSE')
-plt.savefig('./Results/alpha_noise_MSE.pdf')
+plt.savefig('../Results/ex5/alpha_noise_MSE.png')
 
 MSE_l, R2_l, bias_l, variance_l = bootstrap(x, y, z, method='Lasso', p_degree=5)
 text_file.write('--- BOOTSTRAP --- \n')

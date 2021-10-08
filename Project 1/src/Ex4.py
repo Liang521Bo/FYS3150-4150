@@ -61,8 +61,8 @@ fig.tight_layout()
 plt.savefig('./Results/MSE_R2_lambda.pdf')
 
 # consider how the strength of noise affects the lambda values
-noise = np.arange(0.001, 0.4, 0.005)
-lambdas = [10**-5, 10**-4, 10**-3]
+noise = np.arange(0, 0.4, 0.005)
+lambdas = [10**-7, 10**-5, 10**-3,10**-1 ]
 Bs = []
 
 # Generate more data to test

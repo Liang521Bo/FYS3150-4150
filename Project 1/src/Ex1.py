@@ -16,7 +16,7 @@ y = X[:, 1]
 #Noise
 noises = [0, 0.001, 0.01, 0.1, 0.2, 0.3, 0.4]
 #output the info about MSE and R2
-text_file = open("./Results/MSE_R2_detail.txt", "w")
+text_file = open("../Results/ex1/MSE_R2_detail.txt", "w")
 #explore Polynomial degree up to 5th
 for d in range(1, 6):
     MSEs = []
@@ -60,7 +60,7 @@ for d in range(1, 6):
 
     plt.title('Influence of noise on MSE and R2 score with polynomial degree {}'.format(d))
     fig2.tight_layout()
-    plt.savefig('./Results/Degree {}.png'.format(d))
+    plt.savefig('../Results/ex1/Degree {}.png'.format(d))
 
 text_file.close()
 
@@ -80,7 +80,7 @@ M = poly5.fit_transform(M_)
 
 # Calculate beta confidence intervals
 conf1, conf2 = betaCI_OLS(z_test, beta, M)
-text_file = open("./Results/BetaCI_ols.txt", "w")
+text_file = open("../Results/ex1/BetaCI_ols.txt", "w")
 for i in range(len(conf1)):
     text_file.write('Beta {0}: {1:5f} & [{2:5f}, {3:5f}] \n'.format(i, beta[i], conf1[i], conf2[i]))
 text_file.close()
