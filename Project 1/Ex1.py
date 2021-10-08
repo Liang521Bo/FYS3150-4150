@@ -2,8 +2,6 @@ from AnalysisFunctions import *
 import numpy as np
 from sklearn.preprocessing import PolynomialFeatures
 import matplotlib.pyplot as plt
-from matplotlib import cm
-from mpl_toolkits.mplot3d import Axes3D
 from sklearn.model_selection import train_test_split
 
 """
@@ -84,4 +82,5 @@ M = poly5.fit_transform(M_)
 conf1, conf2 = betaCI_OLS(z_test, beta, M)
 text_file = open("./Results/BetaCI_ols.txt", "w")
 for i in range(len(conf1)):
-    print('Beta {0}: {1:5f} & [{2:5f}, {3:5f}]'.format(i, beta[i], conf1[i], conf2[i]))
+    text_file.write('Beta {0}: {1:5f} & [{2:5f}, {3:5f}] \n'.format(i, beta[i], conf1[i], conf2[i]))
+text_file.close()
